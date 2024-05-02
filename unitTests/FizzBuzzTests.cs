@@ -73,4 +73,65 @@ public class FizzBuzzTests
         Assert.NotNull(result);
         Assert.Equal("FizzBuzz", result);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void NumberIsLessThan1(int input)
+    {
+        //Arange
+        _sut = new FizzBuzz(criterias);
+        //Act
+        var exception = Assert.Throws<ArgumentException>(() => _sut.Get(input));
+        //Assert
+        Assert.NotNull(exception);
+        Assert.Equal("Input must be greater than 0", exception.Message);
+    }
+
+    [Fact]
+    public void GetWithMultipleCriteria1_ReturnsSucces()
+    {
+        //Arange
+        var criterias = new List<Criteria>
+        {
+            new Criteria { Number = [7], Expected = "Test" }
+        };
+        _sut = new FizzBuzz(criterias);
+        //Act
+        var result = _sut.GetWithMultipleCriteria(14);
+        //Assert
+        Assert.NotNull(result);
+        Assert.Equal("Test", result);
+    }
+
+    [Fact]
+    public void GetWithMultipleCriteria2_ReturnsSucces()
+    {
+        //Arange
+        var criterias = new List<Criteria>
+        {
+            new Criteria { Number = [7,100], Expected = "Test" }
+        };
+        _sut = new FizzBuzz(criterias);
+        //Act
+        var result = _sut.GetWithMultipleCriteria(700);
+        //Assert
+        Assert.NotNull(result);
+        Assert.Equal("Test", result);
+    }
+    [Fact]
+    public void GetWithMultipleCriteria3_ReturnsFailed()
+    {
+        //Arange
+        var criterias = new List<Criteria>
+        {
+            new Criteria { Number = [7,100], Expected = "Test" }
+        };
+        _sut = new FizzBuzz(criterias);
+        //Act
+        var result = _sut.GetWithMultipleCriteria(699);
+        //Assert
+        Assert.NotNull(result);
+        Assert.Equal("699", result);
+    }
 }
